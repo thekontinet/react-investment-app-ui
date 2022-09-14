@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "About", href: "/about", current: false },
-  { name: "Contact", href: "#", current: false },
+  { name: "Contact", href: "/", current: false },
 ];
 
 function classNames(...classes) {
