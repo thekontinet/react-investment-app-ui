@@ -7,7 +7,6 @@ function AppLayout({ children }) {
     <div>
       <Navbar />
       {children}
-      <Footer />
     </div>
   );
 }
