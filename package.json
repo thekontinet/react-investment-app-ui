@@ -13,6 +13,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.1",
     "@heroicons/react": "^2.0.11",
+    "esbuild-windows-64": "^0.15.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.35.0",
