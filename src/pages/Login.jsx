@@ -67,7 +67,9 @@ function Login() {
         </div>
 
         <div>
-          <Button>Login</Button>
+          <Button className="w-full" variant="primary">
+            Login
+          </Button>
           <Link
             className="block text-center underline text-blue-500 font-bold mt-3"
             to="/register"
