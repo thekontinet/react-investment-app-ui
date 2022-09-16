@@ -4,6 +4,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Transfer from "./pages/Transfer";
+import Withdrawal from "./pages/Withdrawal";
 
 export default function App() {
   return (
@@ -14,6 +16,8 @@ export default function App() {
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
         <Route path="forgot" element={<ForgotPassword />} />
+        <Route path="withdrawal" element={<Withdrawal />} />
+        <Route path="transfer" element={<Transfer />} />
       </Routes>
     </BrowserRouter>
   );
