@@ -11,7 +11,7 @@ function InvestmentItem({ title, amount, classes }) {
       )}
     >
       <div className="flex justify-between items-center">
-        <div className="flex flex-col items-center">
+        <div className="flex items-center gap-2 py-2">
           <img className="mb-1 w-5" src={icon} alt="" />
           <p className="text-xl tracking-wide text-black">{title}</p>
         </div>

@@ -16,11 +16,8 @@ export default function App() {
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
         <Route path="forgot" element={<ForgotPassword />} />
-
         <Route path="deposit" element={<Deposit />} />
-
         <Route path="dashboard" element={<Dashboard />} />
-
       </Routes>
     </BrowserRouter>
   );
