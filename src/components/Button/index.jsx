@@ -24,7 +24,7 @@ function Button({ children, className, variant, ...rest }) {
       className={variantClassNames(
         variant,
         className,
-        "flex justify-center items-center px-4 py-1 font-medium tracking-wide capitalize transition-colors duration-300 transform focus:outline-none focus:ring focus:ring-opacity-80"
+        "flex justify-center items-center px-4 py-2 font-medium tracking-wide capitalize transition-colors duration-300 transform focus:outline-none focus:ring focus:ring-opacity-80"
       )}
     >
       {children}

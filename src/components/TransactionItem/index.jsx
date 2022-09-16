@@ -21,7 +21,9 @@ export default function TransactionItem({ time, variant, amount }) {
       <div className="flex items-center space-x-3">
         <img className=" w-10 h-10 rounded-[50%] bg-indigo-400 " />
         <div>
-          <p className="text-sm font-bold text-slate-500">CREDIT</p>
+          <p className="text-sm font-bold text-slate-500">
+            {variant.toUpperCase()}
+          </p>
           <p className="text-xs text-slate-300 font-light">{time}</p>
         </div>
       </div>
