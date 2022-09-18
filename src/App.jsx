@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import About from "./pages/About";
 import Deposit from "./pages/Deposit";
 import ForgotPassword from "./pages/ForgotPassword";
+import Transactions from "./pages/Transactions";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -9,7 +10,6 @@ import Transfer from "./pages/Transfer";
 import Withdrawal from "./pages/Withdrawal";
 import Dashboard from "./pages/Dashboard";
 import Wallet from "./pages/Wallet";
-import Transactions from "./pages/Transactions";
 import Transaction from "./pages/Transaction";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,6 +20,7 @@ export default function App() {
       <ToastContainer autoClose={2000} />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="transactions" element={<Transactions />} />
         <Route path="about" element={<About />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />

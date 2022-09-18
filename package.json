@@ -13,6 +13,10 @@
   "dependencies": {
     "@headlessui/react": "^1.7.1",
     "@heroicons/react": "^2.0.11",
+<<<<<<< HEAD
+    "esbuild": "^0.15.7",
+=======
+>>>>>>> 67e3134af199004c65b09ba19b370fe7d4d88d8c
     "esbuild-darwin-64": "^0.15.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

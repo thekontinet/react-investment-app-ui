@@ -21,7 +21,6 @@ function Transactions() {
         ))}
       </div>
     </AppLayout>
-  );
-}
+  );}
 
 export default Transactions;
