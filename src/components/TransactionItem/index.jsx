@@ -10,12 +10,21 @@ const variantClasses = (variant) => {
   }
 };
 
-export default function TransactionItem({ time, variant, amount }) {
+export default function TransactionItem({
+  time,
+  variant,
+  amount,
+  className,
+  ...rest
+}) {
   return (
     <div
+      to="#"
+      {...rest}
       className={classNames(
-        "flex justify-between p-4 items-center border-2 rounded-md shadow-lg",
-        variantClasses(variant)
+        "flex justify-between p-4 items-center border rounded-md hover:shadow cursor-pointer",
+        variantClasses(variant),
+        className
       )}
     >
       <div className="flex items-center space-x-3">

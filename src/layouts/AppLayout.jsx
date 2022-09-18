@@ -4,7 +4,7 @@ import Navbar from "./patials/Navbar";
 
 function AppLayout({ children }) {
   return (
-    <div>
+    <div className="bg-slate-100">
       <Navbar />
       {children}
       <Footer />

@@ -1,9 +1,10 @@
 import React from "react";
 import { BanknotesIcon } from "@heroicons/react/24/solid";
+import { classNames } from "../../utils/classNames";
 
 function DataCard({ children, title, content, className, ...rest }) {
   return (
-    <div {...rest} className={`shadow px-14 py-6 max-w-sm ${className}`}>
+    <div {...rest} className={classNames(`shadow px-14 py-6`, className)}>
       <div className="flex items-center justify-between">
         <p className="text-md font-semibold">{title}</p>
         <div className="bg-indigo-100 p-2 rounded-full">

@@ -1,69 +1,60 @@
-import { useEffect, useState } from 'react'
-import AppLayout from '../layouts/AppLayout'
-import Input from '../components/Input/index'
-import Button from '../components/Button'
-
+import { useEffect, useState } from "react";
+import AppLayout from "../layouts/AppLayout";
+import Input from "../components/Input/index";
+import Button from "../components/Button";
+import IconInput from "../components/IconInput";
+import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/24/outline";
+import WalletSelect from "../components/WalletSelect";
+import Clipboard from "../components/Clipboard";
 
 function Withdrawal() {
-    const [buttons, setButtons] = useState([{ text: 'BTC', active: true },
-    { text: 'SOL', active: false },
-    { text: 'TRON', active: false }]);
+  const [buttons, setButtons] = useState([
+    { text: "BTC", active: true },
+    { text: "SOL", active: false },
+    { text: "TRON", active: false },
+  ]);
 
-    const handleSwitch = (text) => setButtons(() => buttons.map(button => ({ ...button, active: button.text === text })))
+  const handleSwitch = (text) =>
+    setButtons(() =>
+      buttons.map((button) => ({ ...button, active: button.text === text }))
+    );
 
+  const activeButton = buttons.find((button) => button.active);
 
-    const activeButton = buttons.find((button) => button.active)
+  return (
+    <AppLayout>
+      <div className="max-w-5xl w-full mx-auto mt-5 text-sm rounded text-slate-600 bg-white shadow px-10 py-4">
+        <h1 className="text-2xl my-9 font-bold">Withdraw</h1>
+        <form action="">
+          <div>
+            <div className="mb-4">
+              <WalletSelect />
+            </div>
 
+            <div className="mb-4">
+              <label htmlFor="">Wallet Address</label>
+              <Clipboard content="Enter content here" type="copy" />
+            </div>
 
-    return (
-        <AppLayout>
-            <div className='bg-indigo-50 py-16 leading-10 text-slate-500 font-semibold uppercase gap-[15%] justify-center flex '>
-                <div className='md:w-[65%] sm:w-[80%]'>
-                    <h1 className='font-bold text-5xl sm:text-4xl pb-4'>WITHDRAWAL</h1>
-                    <label htmlFor="">Amount</label>
-                    <div className='flex relative'>
-                        <span className='text-center pt-2 absolute z-10 top-0 left-2 h-full px-6 text-white bg-indigo-300'>{activeButton.text}</span>
-                        <Input className="border-2 pl-28 focus:text-black border-indigo-300" placeholder="Min 0.001 BTC" />
-                    </div>
-
-                    <p className='pt-6 pb-2'>Select chain:</p>
-                    <div className='flex items-center gap-6 text-indigo-400'>
-                        {
-                            buttons.map((button, index) => {
-                                return (
-                                    <Button
-                                        key={index}
-                                        variant={button.active === true ? 'primary' : 'default'}
-                                        children={button.text}
-                                        className={button.active === false ? "bg-white border-2 rounded-md transition border-indigo-400 hover:bg-indigo-200 hover:text-white hover:border-2 hover:border-transparent duration-500 ease p-10" : "bg-white border-2 focus:outline-none rounded-md border-indigo-400"} 
-                                        onClick={()=>handleSwitch(button.text)}
-                                    />
-                                )
-                            })
-                        }
-                    </div>
+            <div className="mb-4">
+              <label htmlFor="">Amount</label>
+              <div className="flex flex-col lg:flex-row justify-center items-center space-y-2 lg:space-x-2">
+                <IconInput icon="USD" />
+                <div className="flex lg:rotate-90 sm:flex-row sm:mx-auto text-slate-400">
+                  <ArrowUpIcon className="w-5 h-5" />
+                  <ArrowDownIcon className="w-5 h-5" />
                 </div>
+                <IconInput icon="BTC" />
+              </div>
             </div>
-            <div>
-                <form action="">
-                    <div className='w-[75%] mx-auto uppercase text-slate-500 font-semibold flex flex-col my-10 gap-8'>
-                        <div>
-                            <label htmlFor="" className='text-lg'>Wallet Address</label>
-                            <Input className="py-4 border-2 focus:text-black border-indigo-300" placeholder="Enter Address" />
-                        </div>
-
-                        <div>
-                            <label htmlFor="" className='text-lg'>Price</label>
-                            <Input className=" py-4 border-2  border-indigo-300" value="0.0003 BTC" />
-                        </div>
-                    </div>
-                </form>
-
-                <Button children="Proceed" variant="primary" className="py-3 px-6 mx-auto" />
-            </div>
-
-        </AppLayout>
-    )
+          </div>
+          <Button variant="primary" className="my-5">
+            Proceed
+          </Button>
+        </form>
+      </div>
+    </AppLayout>
+  );
 }
 
-export default Withdrawal
+export default Withdrawal;

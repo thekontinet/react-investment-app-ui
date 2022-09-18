@@ -1,18 +1,23 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import NavItem from "../../components/NavItem";
 import { classNames } from "../../utils/classNames";
 import ApplicationLogo from "../../components/ApplicationLogo";
+import { useNavigate } from "react-router-dom";
 
 const navigation = [
-  { name: "Home", href: "/", current: true },
-  { name: "About", href: "/about", current: false },
-  { name: "Contact", href: "/", current: false },
+  { name: "Dashboard", href: "/dashboard" },
+  { name: "Wallet", href: "/wallet" },
+  { name: "Transactions", href: "/transactions" },
 ];
 
 export default function Navbar() {
+  const navigate = useNavigate();
+  function logout() {
+    navigate("/login");
+  }
   return (
     <Disclosure as="nav" className="bg-indigo-800">
       {({ open }) => (
@@ -37,11 +42,7 @@ export default function Navbar() {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <NavItem
-                        key={item.name}
-                        to={item.href}
-                        active={item.current}
-                      >
+                      <NavItem key={item.name} to={item.href}>
                         {item.name}
                       </NavItem>
                     ))}
@@ -107,7 +108,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            onClick={() => logout()}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"

@@ -1,32 +1,53 @@
-import React from 'react'
-import AppLayout from '../layouts/AppLayout'
-import DataCard from '../components/DataCard/index'
-import TransactionItem from '../components/TransactionItem/index'
-import RefererCard from '../components/RefererCard/index'
+import React from "react";
+import AppLayout from "../layouts/AppLayout";
+import DataCard from "../components/DataCard/index";
+import TransactionItem from "../components/TransactionItem";
+import RefererCard from "../components/RefererCard/index";
 
 function Dashboard() {
+  const transactions = [1, 2, 3, 4, 5, 6, 7, 8];
+
   return (
     <AppLayout>
-      <div className='flex justify-center items-center flex-col mt-8 sm:flex-row flex-wrap'>
-        <DataCard title="Balance" content="$3400" className="w-full m-4 bg-indigo-700 rounded-lg text-white"/>
-        <DataCard title="Profit" content="$1000" className="w-full m-4 bg-indigo-700 rounded-lg text-white"/>
-        <DataCard title="Bonus" content="$900" className="w-full m-4 bg-indigo-700 rounded-lg text-white"/>
-      </div>
-
-      <div className='sm:mt-12 lg:flex lg:justify-center pr-12 pl-12 lg:pl-40 lg:pr-40'>
-        <div className='flex justify-center flex-col gap-3 lg:w-2/3 lg:pr-12'>
-          <h1 className='font-bold text-lg'>Transactions</h1>
-          <TransactionItem time="3rd September 2022" variant="credit" amount="$300"/>
-          <TransactionItem time="3rd September 2022" variant="debit" amount="-$300"/>
-          <TransactionItem time="3rd September 2022" variant="debit" amount="$-300"/>
-          <TransactionItem time="3rd September 2022" variant="credit" amount="$300"/>
+      <div className="container px-2 mx-auto">
+        <div className="lg:grid grid-cols-3 lg:space-x-4 mt-8">
+          <DataCard
+            title="Balance"
+            content="$3400"
+            className="flex-1 mb-4 rounded bg-white"
+          />
+          <DataCard
+            title="Profit"
+            content="$1000"
+            className="flex-1 mb-4 rounded bg-white"
+          />
+          <DataCard
+            title="Bonus"
+            content="$900"
+            className="flex-1 mb-4 rounded bg-white"
+          />
         </div>
-        <div className='mt-4 lg:mt-10'>
-          <RefererCard></RefererCard>
+
+        <div className="lg:grid grid-cols-3 items-start rounded lg:space-x-6">
+          <div className="bg-white flex-1 p-4 mb-6 col-span-2 rounded">
+            <h1 className="font-bold text-lg my-5">Transactions</h1>
+            {transactions.map((t) => (
+              <TransactionItem
+                key={t}
+                className="mb-4"
+                time="3rd September 2022"
+                variant="credit"
+                amount="$300"
+              />
+            ))}
+          </div>
+          <div className="flex-2 bg-white p-4">
+            <RefererCard className="shadow-none"></RefererCard>
+          </div>
         </div>
       </div>
     </AppLayout>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;

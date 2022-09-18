@@ -1,9 +1,16 @@
 import React from "react";
+import { classNames } from "../../utils/classNames";
 import Clipboard from "../Clipboard";
 
-function RefererCard() {
+function RefererCard({ className, ...rest }) {
   return (
-    <div className="shadow text-center px-5 py-14 rounded flex flex-col space-y-4">
+    <div
+      {...rest}
+      className={classNames(
+        "shadow text-center px-5 py-14 rounded flex flex-col space-y-4",
+        className
+      )}
+    >
       <h1 className="text-xl font-bold capitalize mb-5">
         Refer and earn upto $500 bonus
       </h1>
