@@ -19,6 +19,14 @@ class MailService {
             body: await render('views/verification.hbs', {code: user.verification_code})
         })
     }
+
+    async sendPasswordResetCode(user, reset){
+        return await this.sendMail({
+            to: user.email, 
+            subject: 'Password Reset', 
+            body: await render('views/PasswordRest.hbs', {code: reset.reset_code})
+        })
+    }
 }
 
 const mailerService = new MailService
