@@ -7,5 +7,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.use('/users', require('../../domains/user'))
+router.use('/email-verification', require('../../domains/user'))
 
 module.exports = router;
