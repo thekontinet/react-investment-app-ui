@@ -41,6 +41,16 @@ class MailService {
       body: template({token, sitename: process.env.APP_NAME}),
     });
   }
+
+  async sendUserPasswordResetCode(user, token){
+    const html = fs.readFileSync('./views/email/PasswordRest.hbs', 'utf-8')
+    const template = hbs.compile(html)
+    return this.sendMail({
+        to: user.email, 
+        subject: 'Password Reset', 
+        body: template({token})
+    })
+  }
 }
 
 const mailerService = new MailService();

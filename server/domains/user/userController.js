@@ -1,6 +1,6 @@
 const createHttpError = require("http-errors");
-const bcrypt = require("bcrypt");
 const Joi = require("joi");
+Joi.objectId = require('joi-objectid')(Joi)
 const User = require("./userSchema");
 const mailerService = require("../../services/mailService");
 
@@ -15,7 +15,7 @@ async function getAllUsers() {
 }
 
 async function createUser(name, email, password) {
-  const { error, value: data } = userValidator.validate({
+  const { error } = userValidator.validate({
     name,
     email,
     password,
@@ -23,14 +23,45 @@ async function createUser(name, email, password) {
 
   if (error) throw new createHttpError.BadRequest(error.details[0].message);
 
-  if (await User.findOne({ email: data.email }))
+  if (await User.findOne({ email }))
     throw new createHttpError.BadRequest("Email already used");
 
-  const user = await User.create(data);
+  const user = await User.create({name, email, password});
 
-  await sendVerificationCode(user.email);
+  const token = await user.generateVerificationToken();
+
+  mailerService.sendUserVerificationCode(user, token);
 
   return user;
+}
+
+async function updateUser(id, params){
+  const {error} = Joi.object({
+      id: Joi.string().required()
+  }).validate({id})
+
+  if (error) throw new createHttpError.BadRequest(error.details[0].message);
+
+  const user = await User.findOne({_id: id})
+
+  if(!user) throw createHttpError.NotFound('user not found')
+
+  // update necessary values only
+  user.name = params.name
+  
+   await user.save()
+
+   return user
+}
+
+async function deleteUser(id, password){
+  const user = await User.findById(id)
+  if(!user) throw new createHttpError.NotFound('User not found')
+
+  if(await user.comparePassword(password)){
+      return await user.delete()
+  }
+  return false
 }
 
 async function sendVerificationCode(email) {
@@ -42,51 +73,28 @@ async function sendVerificationCode(email) {
 
   if (!user) throw new createHttpError.NotFound("Email not found");
 
+  if (user.emailVerified()) throw new createHttpError.Forbidden("Email already verified");
+
   const token = await user.generateVerificationToken();
 
   mailerService.sendUserVerificationCode(user, token);
 }
 
-async function verifyEmail(email, token) {
-  const { error, value: data } = Joi.object({
-    email: Joi.string().email().required(),
+async function verifyEmail(id, token) {
+  const { error } = Joi.object({
+    id: Joi.objectId(),
     token: Joi.string().required(),
-  }).validate({ email, token });
+  }).validate({ id, token });
 
   if (error) throw new createHttpError.BadRequest(error.details[0].message);
 
-  const user = await User.findOne({ email: data.email });
+  const user = await User.findById(id);
 
-  if (!user) throw new createHttpError.NotFound("Email not found");
+  if (!user) throw new createHttpError.NotFound("Account not found");
 
-  return await user.verifyToken(data.token);
-}
-
-async function updateUser(id, params){
-    const {error} = Joi.object({
-        id: Joi.string().required()
-    }).validate({id})
-
-    if (error) throw new createHttpError.BadRequest(error.details[0].message);
-
-    const user = await User.findOne({_id: id})
-
-    // update necessary values only
-    user.name = params.name
-    
-     await user.save()
-
-     return user
-}
-
-async function deleteUser(id, password){
-    const user = await User.findById(id)
-    if(!user) throw new createHttpError.NotFound('User not found')
-
-    if(await user.comparePassword(password)){
-        return await user.delete()
-    }
-    return false
+  if(! await user.verifyToken(token)){
+    throw new createHttpError.BadRequest("Invalid token provided")
+  }
 }
 
 module.exports = { getAllUsers, createUser, sendVerificationCode, verifyEmail, updateUser, deleteUser };

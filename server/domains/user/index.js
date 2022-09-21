@@ -1,5 +1,5 @@
 const expressAsyncHandler = require('express-async-handler')
-const { createUser, updateUser, deleteUser, getAllUsers, verifyEmail } = require('./userController')
+const { createUser, updateUser, deleteUser, getAllUsers, verifyEmail, sendVerificationCode } = require('./userController')
 const router = require('express').Router()
 
 router.get('/', expressAsyncHandler(async function(req, res){
@@ -21,13 +21,19 @@ router.put('/:id', expressAsyncHandler(async function(req, res){
 router.delete('/:id', expressAsyncHandler(async function(req, res){
     const {password} = req.body
     await deleteUser(req.params.id, password)
-    res.json("done")
+    res.json("account deleted")
 }))
 
 router.post('/email/verify', expressAsyncHandler(async function(req, res){
     const {token} = req.body
-    await verifyEmail(email, token)
-    res.json("done")
+    await verifyEmail('632a68267fba8b66837fe6c1', token)
+    res.json("email verified")
+}))
+
+router.post('/email/resend', expressAsyncHandler(async function(req, res){
+    const {email} = req.body
+    await sendVerificationCode(email)
+    res.json("verification info has been sent to mail")
 }))
 
 

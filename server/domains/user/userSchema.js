@@ -16,11 +16,11 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    verification_code: {
+    verificationCode: {
         type: String,
         default: ''
     },
-    email_verified_at: {
+    emailVerifiedAt: {
         type: Date,
         default: null
     }
@@ -48,23 +48,28 @@ UserSchema.methods.comparePassword = async function(password) {
 
 UserSchema.methods.generateVerificationToken = async function(){
     const code = Math.random().toString().slice(2, 8)
-    this.verification_code = await bcrypt.hash(code, await bcrypt.genSalt(10))
+    this.verificationCode = await bcrypt.hash(code, await bcrypt.genSalt(10))
     await this.save()
     return code
 }
 
 UserSchema.methods.verifyToken = async function(token){
-    if(await bcrypt.compare(token, this.verification_code)){
-        this.verification_code = '';
+    if(await bcrypt.compare(token, this.verificationCode)){
+        this.verificationCode = '';
+        this.emailVerifiedAt = Date.now();
         return await this.save()
     }
     return false
 }
 
+UserSchema.methods.emailVerified = function(){
+    return this.emailVerifiedAt
+}
+
 UserSchema.methods.toJSON = function(){
-    user = this.toObject()
+    const user = this.toObject()
     delete user.password
-    delete user.verification_code
+    delete user.verificationCode
     return user
 }
 
