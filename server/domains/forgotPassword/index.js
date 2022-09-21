@@ -2,17 +2,17 @@ const expressAsyncHandler = require('express-async-handler');
 const { PasswordReset, PasswordUpdate } = require('./resetController');
 const router = require('express').Router();
 
-router.post('/forgotPassword', expressAsyncHandler(async(req, res) => {
+router.post('/forgot', expressAsyncHandler(async(req, res) => {
         const {email} = req.body
         await PasswordReset(email)
-        res.status(201).json('Token sent.')
+        res.status(201).json('password reset information has been sent to your mail')
     }
 ));
 
-router.post('/resetPassword', expressAsyncHandler(async(req, res) => {
-    const {password, code} = req.body;
-    await PasswordUpdate(password, code)
-    res.status(200).end()
+router.post('/reset', expressAsyncHandler(async(req, res) => {
+    const {password, token} = req.body;
+    await PasswordUpdate(password, token)
+    res.status(200).json('password reset successful')
 }))
 
 module.exports = router

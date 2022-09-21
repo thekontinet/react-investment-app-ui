@@ -1,34 +1,58 @@
-const transporter = require("../config/mail");
-const { render } = require("../utils/view");
+const nodemailer = require("nodemailer");
+const hbs = require("handlebars");
+const fs = require("fs");
 
 class MailService {
-    async sendMail ({to, subject, body}) {
-        return await transporter.sendMail({
-            from: `${process.env.APP_NAME} <${process.env.MAIL_FROM}>`,
-            to,
-            subject,
-            text:body,
-            html: body
-        })
-    }
+  constructor() {
+    this.transporter = nodemailer.createTransport({
+      host: process.env.MAIL_HOST,
+      port: process.env.MAIL_PORT,
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASSWORD,
+      },
+    });
+  }
 
-    async sendUserVerificationCode(user){
-        return await this.sendMail({
-            to: user.email, 
-            subject: 'Email Verification', 
-            body: await render('views/verification.hbs', {code: user.verification_code})
-        })
-    }
+  sendMail({ to, subject, body = null}) {
+    this.transporter.sendMail(
+      {
+        from: `${process.env.APP_NAME} <${process.env.MAIL_FROM}>`,
+        to,
+        subject,
+        text: body,
+        html: body,
+      },
+      function (err) {
+        if (err) {
+          throw new Error('Error sending mail');
+        }
+        return true;
+      }
+    );
+  }
 
-    async sendPasswordResetCode(user, reset){
-        return await this.sendMail({
-            to: user.email, 
-            subject: 'Password Reset', 
-            body: await render('views/PasswordRest.hbs', {code: reset.reset_code})
-        })
-    }
+  sendUserVerificationCode(user, token) {
+    const html = fs.readFileSync('./views/email/email_verification.hbs', 'utf-8')
+    const template = hbs.compile(html)
+    return this.sendMail({
+      to: user.email,
+      subject: "Verify Email",
+      body: template({token, sitename: process.env.APP_NAME}),
+    });
+  }
+
+  async sendUserPasswordResetCode(user, token){
+    const html = fs.readFileSync('./views/email/PasswordRest.hbs', 'utf-8')
+    const template = hbs.compile(html)
+    return this.sendMail({
+        to: user.email, 
+        subject: 'Password Reset', 
+        body: template({token})
+    })
+  }
 }
 
-const mailerService = new MailService
+const mailerService = new MailService();
 
-module.exports = mailerService
+module.exports = mailerService;
