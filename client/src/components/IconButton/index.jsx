@@ -7,7 +7,7 @@ function IconButton({ children, icon, position, className, ...rest }) {
       <span className="group-hover:-translate-x-2 transition-all">
         {(position === "left" || position === "both") && icon}
       </span>
-      <span class="mx-2 block">{children}</span>
+      <span className="mx-2 block">{children}</span>
       <span className="group-hover:translate-x-2 transition-all">
         {(position === "right" || position === "both") && icon}
       </span>

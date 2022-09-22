@@ -1,8 +1,9 @@
 const expressAsyncHandler = require('express-async-handler')
+const auth = require('../../middlewares/auth')
 const { createUser, updateUser, deleteUser, getAllUsers, verifyEmail, sendVerificationCode } = require('./userController')
 const router = require('express').Router()
 
-router.get('/', expressAsyncHandler(async function(req, res){
+router.get('/', auth, expressAsyncHandler(async function(req, res){
     res.send(await getAllUsers())
 }))
 
@@ -24,9 +25,9 @@ router.delete('/:id', expressAsyncHandler(async function(req, res){
     res.json("account deleted")
 }))
 
-router.post('/email/verify', expressAsyncHandler(async function(req, res){
+router.post('/email/verify', auth, expressAsyncHandler(async function(req, res){
     const {token} = req.body
-    await verifyEmail('632a68267fba8b66837fe6c1', token)
+    await verifyEmail(req.user._id.toString(), token)
     res.json("email verified")
 }))
 

@@ -6,6 +6,7 @@ function NavItem({ to, active, children, ...rest }) {
   return (
     <NavLink
       to={to}
+      end
       className={({ isActive }) =>
         classNames(
           isActive

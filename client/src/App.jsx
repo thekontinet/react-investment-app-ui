@@ -5,7 +5,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Transactions from "./pages/Transactions";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Register from "./pages/Register/Register";
 import Transfer from "./pages/Transfer";
 import Withdrawal from "./pages/Withdrawal";
 import Dashboard from "./pages/Dashboard";
@@ -13,17 +13,25 @@ import Wallet from "./pages/Wallet";
 import Transaction from "./pages/Transaction";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import EmailVerify from "./pages/EmailVerify";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <ToastContainer autoClose={2000} />
+      <ToastContainer
+        autoClose={2000}
+        position="top-center"
+        hideProgressBar={true}
+        theme="dark"
+      />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="transactions" element={<Transactions />} />
         <Route path="about" element={<About />} />
+
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
+        <Route path="verify-email" element={<EmailVerify />} />
+
         <Route path="forgot" element={<ForgotPassword />} />
         <Route path="withdraw" element={<Withdrawal />} />
         <Route path="transfer" element={<Transfer />} />

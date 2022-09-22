@@ -8,6 +8,7 @@ import ApplicationLogo from "../../components/ApplicationLogo";
 import { useNavigate } from "react-router-dom";
 
 const navigation = [
+  { name: "Home", href: "/" },
   { name: "Dashboard", href: "/dashboard" },
   { name: "Wallet", href: "/wallet" },
   { name: "Transactions", href: "/transactions" },

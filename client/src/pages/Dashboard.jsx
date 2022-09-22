@@ -3,9 +3,16 @@ import AppLayout from "../layouts/AppLayout";
 import DataCard from "../components/DataCard/index";
 import TransactionItem from "../components/TransactionItem";
 import RefererCard from "../components/RefererCard/index";
+import axios from "../services/axios";
+import { toast } from "react-toastify";
 
 function Dashboard() {
   const transactions = [1, 2, 3, 4, 5, 6, 7, 8];
+
+  axios
+    .get("/users")
+    .then((res) => console.log(res?.data))
+    .catch((err) => toast(err.response?.data));
 
   return (
     <AppLayout>

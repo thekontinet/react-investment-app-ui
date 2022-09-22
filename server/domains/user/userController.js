@@ -93,7 +93,7 @@ async function verifyEmail(id, token) {
   if (!user) throw new createHttpError.NotFound("Account not found");
 
   if(! await user.verifyToken(token)){
-    throw new createHttpError.BadRequest("Invalid token provided")
+    throw new createHttpError.BadRequest("verification token is not valid")
   }
 }
 
