@@ -37,8 +37,9 @@ async function PasswordUpdate(password, token) {
 
   const resetCode = await Reset.findOne({ token });
 
-  if (!resetCode)
+  if (!resetCode){
     throw new createHttpError.BadRequest("invalid token provided. Please check your mail and try again");
+  }
 
   if (resetCode.hasExpired()) {
     throw new createHttpError.BadRequest("token expired");

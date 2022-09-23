@@ -1,25 +1,15 @@
 import React from "react";
-import AuthLayout from "../layouts/AuthLayout";
-import { LockClosedIcon } from "@heroicons/react/20/solid";
+import AuthLayout from "../../layouts/AuthLayout";
 import { Link } from "react-router-dom";
-import Button from "../components/Button";
-import { useForm } from "react-hook-form";
-import Axios from 'axios'
-import { useState } from "react";
+import Button from "../../components/Button";
+import useForgotPassword from "./useForgotPassword";
+
 
 function ForgotPassword() {
-  const[email, setEmail] = useState("")
- const onSubmit = () => {
-    Axios.post('http://localhost:5000/api/password/forgot', {email: email}
-         .then(()=>{
-          return alert("code sent!")
-         }).catch((err)=>{
-          return console.log(err)
-         })
- )}
+    const {onSubmit, setEmail} = useForgotPassword()
   return (
     <AuthLayout title="Reset Password" subtitle="Enter email to reset password">
-      <form className="mt-8 space-y-6" method="POST" onClick={onSubmit}>
+      <form className="mt-8 space-y-6" onSubmit={onSubmit}>
         <input type="hidden" name="remember" defaultValue="true" />
         <div className="-space-y-px rounded-md shadow-sm">
           <div>

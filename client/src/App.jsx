@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import About from "./pages/About";
 import Deposit from "./pages/Deposit";
-import ForgotPassword from "./pages/ForgotPassword";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import Transactions from "./pages/Transactions";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -14,6 +14,7 @@ import Transaction from "./pages/Transaction";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EmailVerify from "./pages/EmailVerify";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="verify-email" element={<EmailVerify />} />
 
         <Route path="forgot" element={<ForgotPassword />} />
+        <Route path="reset" element={<ResetPassword />} />
         <Route path="withdraw" element={<Withdrawal />} />
         <Route path="transfer" element={<Transfer />} />
         <Route path="deposit" element={<Deposit />} />

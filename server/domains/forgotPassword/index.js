@@ -9,7 +9,7 @@ router.post('/forgot', expressAsyncHandler(async(req, res) => {
     }
 ));
 
-router.post('/reset', expressAsyncHandler(async(req, res) => {
+router.put('/reset', expressAsyncHandler(async(req, res) => {
     const {password, token} = req.body;
     await PasswordUpdate(password, token)
     res.status(200).json('password reset successful')
