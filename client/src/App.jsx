@@ -15,23 +15,25 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EmailVerify from "./pages/EmailVerify";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import { AuthProvider } from "./context/authContext";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <ToastContainer
-        autoClose={2000}
-        position="top-center"
-        hideProgressBar={true}
-        theme="dark"
-      />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="about" element={<About />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <ToastContainer
+          autoClose={2000}
+          position="top-center"
+          hideProgressBar={true}
+          theme="dark"
+        />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="about" element={<About />} />
 
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<Login />} />
-        <Route path="verify-email" element={<EmailVerify />} />
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+          <Route path="verify-email" element={<EmailVerify />} />
 
         <Route path="forgot" element={<ForgotPassword />} />
         <Route path="reset" element={<ResetPassword />} />
@@ -46,5 +48,8 @@ export default function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-  );
-}
+    </AuthProvider>
+
+         
+     
+

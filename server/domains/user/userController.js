@@ -1,6 +1,6 @@
 const createHttpError = require("http-errors");
 const Joi = require("joi");
-Joi.objectId = require('joi-objectid')(Joi)
+Joi.objectId = require("joi-objectid")(Joi);
 const User = require("./userSchema");
 const mailerService = require("../../services/mailService");
 
@@ -11,7 +11,11 @@ const userValidator = Joi.object({
 });
 
 async function getAllUsers() {
-    return await User.find()
+  return await User.find();
+}
+
+async function getUser(id) {
+  return await User.find({ _id: id });
 }
 
 async function createUser(name, email, password) {
@@ -26,7 +30,7 @@ async function createUser(name, email, password) {
   if (await User.findOne({ email }))
     throw new createHttpError.BadRequest("Email already used");
 
-  const user = await User.create({name, email, password});
+  const user = await User.create({ name, email, password });
 
   const token = await user.generateVerificationToken();
 
@@ -35,33 +39,33 @@ async function createUser(name, email, password) {
   return user;
 }
 
-async function updateUser(id, params){
-  const {error} = Joi.object({
-      id: Joi.string().required()
-  }).validate({id})
+async function updateUser(id, params) {
+  const { error } = Joi.object({
+    id: Joi.string().required(),
+  }).validate({ id });
 
   if (error) throw new createHttpError.BadRequest(error.details[0].message);
 
-  const user = await User.findOne({_id: id})
+  const user = await User.findOne({ _id: id });
 
-  if(!user) throw createHttpError.NotFound('user not found')
+  if (!user) throw createHttpError.NotFound("user not found");
 
   // update necessary values only
-  user.name = params.name
-  
-   await user.save()
+  user.name = params.name;
 
-   return user
+  await user.save();
+
+  return user;
 }
 
-async function deleteUser(id, password){
-  const user = await User.findById(id)
-  if(!user) throw new createHttpError.NotFound('User not found')
+async function deleteUser(id, password) {
+  const user = await User.findById(id);
+  if (!user) throw new createHttpError.NotFound("User not found");
 
-  if(await user.comparePassword(password)){
-      return await user.delete()
+  if (await user.comparePassword(password)) {
+    return await user.delete();
   }
-  return false
+  return false;
 }
 
 async function sendVerificationCode(email) {
@@ -73,7 +77,8 @@ async function sendVerificationCode(email) {
 
   if (!user) throw new createHttpError.NotFound("Email not found");
 
-  if (user.emailVerified()) throw new createHttpError.Forbidden("Email already verified");
+  if (user.emailVerified())
+    throw new createHttpError.Forbidden("Email already verified");
 
   const token = await user.generateVerificationToken();
 
@@ -92,9 +97,17 @@ async function verifyEmail(id, token) {
 
   if (!user) throw new createHttpError.NotFound("Account not found");
 
-  if(! await user.verifyToken(token)){
-    throw new createHttpError.BadRequest("verification token is not valid")
+  if (!(await user.verifyToken(token))) {
+    throw new createHttpError.BadRequest("verification token is not valid");
   }
 }
 
-module.exports = { getAllUsers, createUser, sendVerificationCode, verifyEmail, updateUser, deleteUser };
+module.exports = {
+  getAllUsers,
+  getUser,
+  createUser,
+  sendVerificationCode,
+  verifyEmail,
+  updateUser,
+  deleteUser,
+};

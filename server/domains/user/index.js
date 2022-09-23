@@ -1,11 +1,16 @@
 const expressAsyncHandler = require('express-async-handler')
 const auth = require('../../middlewares/auth')
-const { createUser, updateUser, deleteUser, getAllUsers, verifyEmail, sendVerificationCode } = require('./userController')
+const { createUser, updateUser, deleteUser, getAllUsers, verifyEmail, sendVerificationCode, getUser } = require('./userController')
 const router = require('express').Router()
 
 router.get('/', auth, expressAsyncHandler(async function(req, res){
     res.send(await getAllUsers())
 }))
+
+router.get('/me', auth, expressAsyncHandler(async function(req, res){
+    res.send(await getUser(req.user.id))
+}))
+
 
 router.post('/', expressAsyncHandler(async function(req, res){
     const {name, email, password} = req.body
