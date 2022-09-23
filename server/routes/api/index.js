@@ -5,5 +5,6 @@ var router = express.Router();
 router.use('/users', require('../../domains/user'))
 router.use('/email-verification', require('../../domains/user'))
 router.use('/password', require('../../domains/forgotPassword'))
+router.use('/auth', require('../../domains/auth'))
 
 module.exports = router;

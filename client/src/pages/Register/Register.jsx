@@ -1,43 +1,12 @@
-import React, { useState } from "react";
-import AuthLayout from "../layouts/AuthLayout";
-import { ArrowSmallRightIcon, LockClosedIcon } from "@heroicons/react/20/solid";
+import AuthLayout from "../../layouts/AuthLayout";
+import { ArrowSmallRightIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import IconButton from "../components/IconButton";
-import Input from "../components/Input";
+import IconButton from "../../components/IconButton";
+import Input from "../../components/Input";
+import useRgister from "./useRegister";
 
 function Register() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const form = {
-    name: register("name", {
-      required: "Name is required",
-      maxLength: { value: 200, message: "Name is too long" },
-    }),
-    email: register("email", {
-      required: "Email is required",
-      pattern: {
-        value:
-          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-        message: "Email is invalid",
-      },
-    }),
-    password: register("password", {
-      required: "Password is required",
-      minLength: {
-        value: 6,
-        message: "Password should be atleast 6 characters long",
-      },
-    }),
-  };
-
-  const onSubmit = (data) => {
-    console.log(data);
-    alert("registered");
-  };
+  const { onSubmit, form, handleSubmit, errors } = useRgister();
 
   return (
     <AuthLayout title="Register" subtitle="Create a new account">

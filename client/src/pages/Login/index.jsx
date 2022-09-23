@@ -1,43 +1,36 @@
 import React from "react";
-import AuthLayout from "../layouts/AuthLayout";
+import AuthLayout from "../../layouts/AuthLayout";
 import { ArrowSmallRightIcon, LockClosedIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
-import Button from "../components/Button";
-import Input from "../components/Input";
-import IconButton from "../components/IconButton";
+import Input from "../../components/Input";
+import IconButton from "../../components/IconButton";
+import useLogin from "./useLogin";
 
 function Login() {
+  const { onSubmit, form, errors } = useLogin();
   return (
     <AuthLayout title="Login" subtitle="Enter credentials to login">
-      <form className="mt-8 space-y-6" action="#" method="POST">
+      <form className="mt-8 space-y-6" onSubmit={onSubmit}>
         <input type="hidden" name="remember" defaultValue="true" />
         <div className="space-y-3 rounded-md">
           <div>
             <label htmlFor="email-address" className="sr-only">
               Email address
             </label>
-            <Input
-              id="email-address"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              placeholder="Email address"
-            />
+            <Input type="email" placeholder="Email address" {...form.email} />
+            <span className="text-sm text-red-500">
+              {errors?.email?.message}
+            </span>
           </div>
 
           <div>
             <label htmlFor="password" className="sr-only">
               Password
             </label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              placeholder="Password"
-            />
+            <Input type="password" placeholder="Password" {...form.password} />
+            <span className="text-sm text-red-500">
+              {errors?.password?.message}
+            </span>
           </div>
         </div>
 

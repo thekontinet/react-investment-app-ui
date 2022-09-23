@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "axios": "^0.27.2",
-    "joi-objectid": "^4.0.2"
-  }
-}
